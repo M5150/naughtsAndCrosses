@@ -1,0 +1,5 @@
+
+node_modules/
+src/assets/bundle.js
+
+.vscode/launch.json
