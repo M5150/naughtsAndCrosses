@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
 import { checkWin, buildBoard } from '../utils/helpers';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import Winner from './Winner';
 import Tile from './Tile';
+import Controls from './Controls';
 
 export default class GameBoard extends Component {
   constructor (props) {
@@ -12,7 +14,7 @@ export default class GameBoard extends Component {
 
   componentWillMount () {
     this.resetBoard();
-  }
+  };
 
   checkGameState () {
     const gameState = checkWin(this.state.boardModel.toArray(), this.props.boardSize);
@@ -20,16 +22,36 @@ export default class GameBoard extends Component {
   };
 
   selectTile (index, event) {
-    if (!this.state.boardModel.get(index)) {
-      const turn = this.state.boardParams.get('turn') ? 'X' : 'O';
+    const { boardParams, boardModel } = this.state;
+    if (!boardModel.get(index)) {
+      event.target.classList.add('boardTile--active');
+      const turn = boardParams.get('turn') ? 'X' : 'O';
       this.setState(prev => ({
-      boardModel: this.state.boardModel.update(index, val => turn),
-      boardParams: this.state.boardParams.set('turn', !this.state.boardParams.get('turn')),
-    }), this.checkGameState);
+        boardModel: boardModel.update(index, val => turn),
+        boardParams: boardParams.set('turn', !boardParams.get('turn')),
+      }), this.checkGameState);
     }
   };
 
+  generateTiles () {
+    const results = [];
+    this.state.boardModel.forEach((value, key) => {
+      results.push(<Tile
+        selectTile = { this.selectTile.bind(this, key) }
+        preview = { this.state.boardParams.get('turn') ? 'X' : 'O' }
+        val = { value }
+        key = { key }
+        boardSize = { this.props.boardSize }/>);
+    });
+    return results;
+  };
+
   resetBoard () {
+    if (this.state) {
+      let tiles = [...ReactDOM.findDOMNode(this).querySelectorAll('.boardTile')];
+      tiles.forEach(node => node.classList.remove('boardTile--active'));
+    }
+
     this.setState({
       boardModel: Immutable.Map(buildBoard(this.props.boardSize)),
       boardParams: Immutable.Map({
@@ -40,31 +62,19 @@ export default class GameBoard extends Component {
   };
 
   render () {
+    const { boardParams, boardModel } = this.state;
     return (
-      <div>
-        <div className = "naughtsAndCrosses__board--controls">
-          <span
-            aria-label = "Close Board"
-            onClick = { this.props.removeGame.bind(this) }>&#10006;</span>
-          { this.state.boardParams.get('winner') ?
-            null :
-            <span
-              aria-label = "Restart Board"
-              onClick = { this.resetBoard.bind(this) }>↻</span> }
-        </div>
-        <div className = "naughtsAndCrosses__board">
-          { this.state.boardParams.get('winner') ?
+      <div className = "naughtsAndCrosses__board">
+        <Controls
+          removeGame = { this.props.removeGame.bind(this) }
+          resetBoard = { this.resetBoard.bind(this) }
+          winner = { boardParams.get('winner') }/>
+        <div className = "naughtsAndCrosses__board--container">
+          { boardParams.get('winner') ?
             <Winner
-              winner = { this.state.boardParams.get('winner') }
+              winner = { boardParams.get('winner') }
               retry = { this.resetBoard.bind(this) }/> :
-            this.state.boardModel.map((value, key) => {
-              return <Tile
-                selectTile = { this.selectTile.bind(this, key) }
-                val = { value }
-                key = { key }
-                boardSize = { this.props.boardSize }/>;
-            })
-          }
+              this.generateTiles() }
         </div>
       </div>
     );

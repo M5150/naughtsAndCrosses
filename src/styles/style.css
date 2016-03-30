@@ -1,7 +1,13 @@
+/* Body and Container */
+body {
+  background-color: white;
+}
+
 #app {
   margin: 20px;
   display: flex;
   flex-direction: column;
+  font-family: 'ABeeZee', sans-serif;
 }
 
 .naughtsAndCrosses {
@@ -10,6 +16,7 @@
   flex-direction: column;
 }
 
+/* Top Menu */
 .naughtsAndCrosses__menu {
   display: flex;
   align-items: center;
@@ -29,15 +36,29 @@
 
 .naughtsAndCrosses__boardArea {
   display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* Play Board */
-
 .naughtsAndCrosses__board {
   display: flex;
-  flex-wrap: wrap;
-  width: 20rem;
+  flex-direction: column;
   margin: 2rem;
+  box-shadow: 0px 7px 19px -2px #777;
+  padding-bottom: 2rem;
+}
+
+@media (max-width: 500px) {
+  .naughtsAndCrosses__board {
+    margin: 2rem 0;
+  }
+}
+
+.naughtsAndCrosses__board--container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 23rem;
   justify-content: center;
   align-items: center;
 }
@@ -48,27 +69,32 @@
 }
 
 /* Play Board Transitions */
-
-.naughtsAndCrosses__board-enter {
+.board__transition-enter {
   opacity: 0.01;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-in;
 }
 
-.naughtsAndCrosses__board-enter.naughtsAndCrosses__board-enter-active {
+.board__transition-enter-active {
   opacity: 1;
-  transition: opacity 500ms ease-in;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
+  transition: opacity 300ms ease-in;
 }
 
-.naughtsAndCrosses__board-leave {
+.board__transition-leave {
   opacity: 1;
 }
 
-.naughtsAndCrosses__board-leave.naughtsAndCrosses__board-leave-active {
+.board__transition-leave-active {
   opacity: 0.01;
+  -webkit-transition: opacity 300ms ease-in;
+  -moz-transition: opacity 300ms ease-in;
   transition: opacity 300ms ease-in;
 }
 
 /* Play Board Win View */
-
 .naughtsAndCrosses__winner {
   display: flex;
   align-items: center;
@@ -77,14 +103,21 @@
   height: 20rem;
 }
 
-.naughtsAndCrosses__board--controls {
-
-}
-
 .naughtsAndCrosses__board--controls span {
   margin: 5px;
   float: right;
   cursor: pointer;
+}
+
+.naughtsAndCrosses__board--controls span:hover {
+  color: crimson;
+  -webkit-transition: color .05s ease-in;
+  -moz-transition: color .05s ease-in;
+  transition: color .05s ease-in;
+}
+
+.naughtsAndCrosses__board--controls span:first-of-type {
+  margin-top: 7px;
 }
 
 .naughtsAndCrosses__winner h2 {
@@ -92,10 +125,23 @@
 }
 
 .boardTile {
+  color: lightgray;
+  -webkit-transition: color 250ms ease-in;
+  -moz-transition: color 250ms ease-in;
+  transition: color 250ms ease-in;
+
   justify-content: center;
   align-items: center;
   display: flex;
   border: 2px solid grey;
+  cursor: pointer;
+}
+
+.boardTile--active {
+  color: black;
+  -webkit-transition: color 150ms ease-in;
+  -moz-transition: color 150ms ease-in;
+  transition: color 150ms ease-in;
 }
 
 /* 3 x 3 Board Tiles */
@@ -262,8 +308,8 @@
 /* 10 x 10 Board Tiles */
 .boardTile--10 {
   font-size: 1.8rem;
-  height: 2rem;
-  width: 2rem;
+  height: 1.9rem;
+  width: 1.9rem;
 }
 
 .boardTile--10:nth-last-child(-n + 10) {

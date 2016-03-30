@@ -21,14 +21,19 @@ export default class NaughtsAndCrosses extends Component {
   };
 
   removeGame (index) {
-    this.setState({ currentBoards: this.state.currentBoards.delete(index) });
+    this.setState(prev => ({ currentBoards: prev.currentBoards.delete(index) }));
   };
 
   render () {
     return (
       <div className = "naughtsAndCrosses">
         <GameMenu addGame = { this.addGame.bind(this) }/>
-        <div className = "naughtsAndCrosses__boardArea">
+        <ReactCSSTransitionGroup
+          transitionName = "board__transition"
+          component = "div"
+          className = "naughtsAndCrosses__boardArea"
+          transitionEnterTimeout = { 500 }
+          transitionLeaveTimeout = { 300 }>
           { this.state.currentBoards.valueSeq().map((board) => {
             return <GameBoard
               key = { board.index }
@@ -36,7 +41,7 @@ export default class NaughtsAndCrosses extends Component {
               removeGame = { this.removeGame.bind(this, board.index) }
             />;
           }) }
-        </div>
+        </ReactCSSTransitionGroup>
       </div>
     );
   };
