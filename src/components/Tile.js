@@ -1,20 +1,10 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export default class Tile extends Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      tileState: Immutable.Map({ mouseOver: false }),
-    };
-  };
-
-  mouseOverHandler () {
-    this.setState({ tileState: this.state.tileState.set('mouseOver', true) });
-  };
-
-  mouseOutHandler () {
-    this.setState({ tileState: this.state.tileState.set('mouseOver', false) });
+  shouldComponentUpdate (nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   };
 
   render () {
@@ -22,11 +12,8 @@ export default class Tile extends Component {
     return (
       <div
         onClick = { selectTile }
-        ref = "tile"
-        onMouseEnter = { this.mouseOverHandler.bind(this) }
-        onMouseLeave = { this.mouseOutHandler.bind(this) }
-        className = { `boardTile boardTile--${boardSize}` }>
-          { !val && this.state.tileState.get('mouseOver') ? preview : val }
+        className = { `boardTile boardTile--${boardSize} ${val ? `boardTile--active` : `boardTile--inactive`}` }>
+        { val || preview }
       </div>
     );
   };

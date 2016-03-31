@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export default class GameMenu extends Component {
   constructor (props) {
     super(props);
     this.state = { menuState: Immutable.Map({ boardSize: '3' }) };
+
+    this.selectBoardSize = this.selectBoardSize.bind(this);
+  };
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return !(!shallowCompare(this, nextProps) &&
+      Immutable.is(this.state.menuState, nextState.menuState));
   };
 
   selectBoardSize (event) {
@@ -16,7 +24,7 @@ export default class GameMenu extends Component {
     return (
       <div className = "naughtsAndCrosses__menu">
         <select
-          onChange = { this.selectBoardSize.bind(this) }>
+          onChange = { this.selectBoardSize }>
           <option value = "3">Board Size</option>
           <option value = "3">3</option>
           <option value = "4">4</option>

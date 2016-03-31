@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
+import shallowCompare from 'react-addons-shallow-compare';
 
 export default class Controls extends Component {
-  constructor (props) {
-    super(props);
+  shouldComponentUpdate (nextProps, nextState) {
+    return shallowCompare(this, nextProps, nextState);
   };
 
   render () {

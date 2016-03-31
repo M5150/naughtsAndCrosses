@@ -125,16 +125,23 @@ body {
 }
 
 .boardTile {
-  color: lightgray;
-  -webkit-transition: color 250ms ease-in;
-  -moz-transition: color 250ms ease-in;
-  transition: color 250ms ease-in;
-
   justify-content: center;
   align-items: center;
   display: flex;
   border: 2px solid grey;
   cursor: pointer;
+}
+
+
+.boardTile--inactive {
+  color: white;
+}
+
+.boardTile--inactive:hover {
+  color: lightgray;
+  -webkit-transition: color 250ms ease-in;
+  -moz-transition: color 250ms ease-in;
+  transition: color 250ms ease-in;
 }
 
 .boardTile--active {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
-import generateUUID from '../utils/helpers';
+import shallowCompare from 'react-addons-shallow-compare';
 import GameMenu from './GameMenu';
 import GameBoard from './GameBoard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
@@ -8,39 +8,52 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 export default class NaughtsAndCrosses extends Component {
   constructor () {
     super();
-    this.state = { currentBoards: Immutable.Map({}) };
+    this.state = { boards: Immutable.Map({}) };
     this.index = 0;
+
+    this.addGame = this.addGame.bind(this);
+    this.removeGame = this.removeGame.bind(this);
+  };
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return !Immutable.is(this.state.boards, nextState.boards);
   };
 
   addGame (boardSize) {
-    const newBoard = {
+    const newBoard = Immutable.Map({
       boardSize: Number(boardSize),
       index: this.index,
-    };
-    this.setState({ currentBoards: this.state.currentBoards.set(this.index++, newBoard) });
+    });
+    this.setState({ boards: this.state.boards.set(this.index++, newBoard) });
   };
 
   removeGame (index) {
-    this.setState(prev => ({ currentBoards: prev.currentBoards.delete(index) }));
+    this.setState(prev => ({ boards: prev.boards.delete(index) }));
+  };
+
+  generateBoards () {
+    const results = [];
+    this.state.boards.forEach((value, key) => {
+      results.push(<GameBoard
+        key = { value.get('index') }
+        index = { value.get('index') }
+        boardSize = { value.get('boardSize') }
+        removeGame = { this.removeGame }/>);
+    });
+    return results;
   };
 
   render () {
     return (
       <div className = "naughtsAndCrosses">
-        <GameMenu addGame = { this.addGame.bind(this) }/>
+        <GameMenu addGame = { this.addGame }/>
         <ReactCSSTransitionGroup
           transitionName = "board__transition"
           component = "div"
           className = "naughtsAndCrosses__boardArea"
           transitionEnterTimeout = { 500 }
           transitionLeaveTimeout = { 300 }>
-          { this.state.currentBoards.valueSeq().map((board) => {
-            return <GameBoard
-              key = { board.index }
-              boardSize = { board.boardSize }
-              removeGame = { this.removeGame.bind(this, board.index) }
-            />;
-          }) }
+          { this.state.boards ? this.generateBoards() : null }
         </ReactCSSTransitionGroup>
       </div>
     );

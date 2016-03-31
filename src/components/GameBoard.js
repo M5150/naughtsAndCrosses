@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import Immutable from 'immutable';
-import { checkWin, buildBoard } from '../utils/helpers';
+import shallowCompare from 'react-addons-shallow-compare';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
+import { checkWin, buildBoard } from '../utils/helpers';
 import Winner from './Winner';
 import Tile from './Tile';
 import Controls from './Controls';
@@ -10,6 +11,15 @@ import Controls from './Controls';
 export default class GameBoard extends Component {
   constructor (props) {
     super(props);
+
+    this.removeGame = this.props.removeGame.bind(this, this.props.index);
+    this.resetBoard = this.resetBoard.bind(this);
+  };
+
+  shouldComponentUpdate (nextProps, nextState) {
+    return !(Immutable.is(this.state.boardModel, nextState.boardModel) &&
+      Immutable.is(this.state.boardParams, nextState.boardParams) &&
+      !shallowCompare(this, nextProps));
   };
 
   componentWillMount () {
@@ -24,7 +34,6 @@ export default class GameBoard extends Component {
   selectTile (index, event) {
     const { boardParams, boardModel } = this.state;
     if (!boardModel.get(index)) {
-      event.target.classList.add('boardTile--active');
       const turn = boardParams.get('turn') ? 'X' : 'O';
       this.setState(prev => ({
         boardModel: boardModel.update(index, val => turn),
@@ -47,11 +56,6 @@ export default class GameBoard extends Component {
   };
 
   resetBoard () {
-    if (this.state) {
-      let tiles = [...ReactDOM.findDOMNode(this).querySelectorAll('.boardTile')];
-      tiles.forEach(node => node.classList.remove('boardTile--active'));
-    }
-
     this.setState({
       boardModel: Immutable.Map(buildBoard(this.props.boardSize)),
       boardParams: Immutable.Map({
@@ -66,14 +70,14 @@ export default class GameBoard extends Component {
     return (
       <div className = "naughtsAndCrosses__board">
         <Controls
-          removeGame = { this.props.removeGame.bind(this) }
-          resetBoard = { this.resetBoard.bind(this) }
+          removeGame = { this.removeGame }
+          resetBoard = { this.resetBoard }
           winner = { boardParams.get('winner') }/>
         <div className = "naughtsAndCrosses__board--container">
           { boardParams.get('winner') ?
             <Winner
               winner = { boardParams.get('winner') }
-              retry = { this.resetBoard.bind(this) }/> :
+              retry = { this.resetBoard }/> :
               this.generateTiles() }
         </div>
       </div>
