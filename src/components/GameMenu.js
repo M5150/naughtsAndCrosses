@@ -22,7 +22,7 @@ export default class GameMenu extends Component {
   render () {
     const { addGame } = this.props;
     return (
-      <div className = "naughtsAndCrosses__menu">
+      <div className = "noughtsAndCrosses__menu">
         <select
           onChange = { this.selectBoardSize }>
           <option value = "3">Board Size</option>

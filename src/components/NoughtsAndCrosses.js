@@ -5,7 +5,7 @@ import GameMenu from './GameMenu';
 import GameBoard from './GameBoard';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
-export default class NaughtsAndCrosses extends Component {
+export default class NoughtsAndCrosses extends Component {
   constructor () {
     super();
     this.state = { boards: Immutable.Map({}) };
@@ -45,12 +45,12 @@ export default class NaughtsAndCrosses extends Component {
 
   render () {
     return (
-      <div className = "naughtsAndCrosses">
+      <div className = "noughtsAndCrosses">
         <GameMenu addGame = { this.addGame }/>
         <ReactCSSTransitionGroup
           transitionName = "board__transition"
           component = "div"
-          className = "naughtsAndCrosses__boardArea"
+          className = "noughtsAndCrosses__boardArea"
           transitionEnterTimeout = { 500 }
           transitionLeaveTimeout = { 300 }>
           { this.state.boards ? this.generateBoards() : null }

@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import NaughtsAndCrosses from './NaughtsAndCrosses';
+import NoughtsAndCrosses from './NoughtsAndCrosses';
 
 ReactDOM.render(
-  <NaughtsAndCrosses/>,
+  <NoughtsAndCrosses/>,
   document.getElementById('app')
 );

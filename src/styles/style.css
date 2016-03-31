@@ -10,38 +10,38 @@ body {
   font-family: 'ABeeZee', sans-serif;
 }
 
-.naughtsAndCrosses {
+.noughtsAndCrosses {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
 /* Top Menu */
-.naughtsAndCrosses__menu {
+.noughtsAndCrosses__menu {
   display: flex;
   align-items: center;
 }
 
-.naughtsAndCrosses__menu button {
+.noughtsAndCrosses__menu button {
   height: 2em;
 }
 
-.naughtsAndCrosses__menu * {
+.noughtsAndCrosses__menu * {
   margin: .7em;
 }
 
-.naughtsAndCrosses__menu select {
+.noughtsAndCrosses__menu select {
   width: 8em;
 }
 
-.naughtsAndCrosses__boardArea {
+.noughtsAndCrosses__boardArea {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 }
 
 /* Play Board */
-.naughtsAndCrosses__board {
+.noughtsAndCrosses__board {
   display: flex;
   flex-direction: column;
   margin: 2rem;
@@ -50,12 +50,12 @@ body {
 }
 
 @media (max-width: 500px) {
-  .naughtsAndCrosses__board {
+  .noughtsAndCrosses__board {
     margin: 2rem 0;
   }
 }
 
-.naughtsAndCrosses__board--container {
+.noughtsAndCrosses__board--container {
   display: flex;
   flex-wrap: wrap;
   width: 23rem;
@@ -63,7 +63,7 @@ body {
   align-items: center;
 }
 
-.naughtsAndCrosses__board:before {
+.noughtsAndCrosses__board:before {
   padding-top: 100%;
   display: block;
 }
@@ -95,7 +95,7 @@ body {
 }
 
 /* Play Board Win View */
-.naughtsAndCrosses__winner {
+.noughtsAndCrosses__winner {
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -103,24 +103,24 @@ body {
   height: 20rem;
 }
 
-.naughtsAndCrosses__board--controls span {
+.noughtsAndCrosses__board--controls span {
   margin: 5px;
   float: right;
   cursor: pointer;
 }
 
-.naughtsAndCrosses__board--controls span:hover {
+.noughtsAndCrosses__board--controls span:hover {
   color: crimson;
   -webkit-transition: color .05s ease-in;
   -moz-transition: color .05s ease-in;
   transition: color .05s ease-in;
 }
 
-.naughtsAndCrosses__board--controls span:first-of-type {
+.noughtsAndCrosses__board--controls span:first-of-type {
   margin-top: 7px;
 }
 
-.naughtsAndCrosses__winner h2 {
+.noughtsAndCrosses__winner h2 {
   margin: 1rem;
 }
 

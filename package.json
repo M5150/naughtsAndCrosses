@@ -1,16 +1,16 @@
 {
-  "name": "naughts-and-crosses",
+  "name": "noughts-and-crosses",
   "version": "0.0.1",
-  "description": "Tic tac toe, also known as naughts and crosses",
+  "description": "Tic tac toe, also known as noughts and crosses",
   "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.js",
-    "run": "webpack-dev-server",
+    "server": "webpack-dev-server",
     "test": "jest"
   },
   "keywords": [
     "tic tac toe",
-    "naughts and crosses",
+    "noughts and crosses",
     "react"
   ],
   "author": "Maximo Cudich-Sieburger",

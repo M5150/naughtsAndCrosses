@@ -14,7 +14,7 @@ export default class Winner extends Component {
 
   render () {
     return (
-      <div className = "naughtsAndCrosses__winner">
+      <div className = "noughtsAndCrosses__winner">
         { this.props.winner === 'TIE' ?
             <h2>{ `${this.props.winner}!` }</h2> :
             <h2>{ `${this.props.winner} wins!` }</h2> }

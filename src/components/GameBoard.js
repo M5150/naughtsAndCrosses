@@ -68,12 +68,12 @@ export default class GameBoard extends Component {
   render () {
     const { boardParams, boardModel } = this.state;
     return (
-      <div className = "naughtsAndCrosses__board">
+      <div className = "noughtsAndCrosses__board">
         <Controls
           removeGame = { this.removeGame }
           resetBoard = { this.resetBoard }
           winner = { boardParams.get('winner') }/>
-        <div className = "naughtsAndCrosses__board--container">
+        <div className = "noughtsAndCrosses__board--container">
           { boardParams.get('winner') ?
             <Winner
               winner = { boardParams.get('winner') }

@@ -10,7 +10,7 @@ export default class Controls extends Component {
   render () {
     const { winner, resetBoard, removeGame } = this.props;
     return (
-      <div className = "naughtsAndCrosses__board--controls">
+      <div className = "noughtsAndCrosses__board--controls">
         <span onClick = { removeGame }>&#10006;</span>
         { !winner ?
           <span onClick = { resetBoard }>↻</span> : null }
